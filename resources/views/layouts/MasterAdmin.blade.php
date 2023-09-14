@@ -16,6 +16,7 @@
     <link href="{{asset('admin/dist/css/style.min.css')}}" rel="stylesheet">
     <!-- Custom CSS by User -->
     <link href="{{asset('admin/dist/css/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('admin/dist/css/custom.css')}}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,6 +24,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script defer src="{{asset('admin/dist/js/plain.js')}}"></script>
 </head>
 
 <body>
@@ -259,7 +261,7 @@
                                                  href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-format-list-bulleted"></i><span
                                 class="hide-menu">Category & Brand </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="{{route('adminCategory')}}" class="sidebar-link"><i
+                            <li class="sidebar-item"><a href="{{route('showCategory')}}" class="sidebar-link"><i
                                         class="mdi mdi-playlist-check"></i><span class="hide-menu"> Category
                                         </span></a>
                             </li>
