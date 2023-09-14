@@ -40,7 +40,10 @@ Route::middleware('auth:admin')->group(function (){
 
     //Category
     Route::controller(CategoryController::class)->group(function (){
-        Route::get('/admin/category','showCategory')->name('adminCategory');
+        Route::get('/admin/category','showCategory')->name('showCategory');
+
+        Route::get('/admin/category/add','addCategory')->name('addCategory');
+        Route::post('/admin/category/add','addCategory')->name('addCategory');
     });
 
 });
