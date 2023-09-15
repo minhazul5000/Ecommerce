@@ -265,7 +265,7 @@
                                         class="mdi mdi-playlist-check"></i><span class="hide-menu"> Category
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i
+                            <li class="sidebar-item"><a href="{{route('showSubCategory')}}" class="sidebar-link"><i
                                         class="mdi mdi-playlist-plus"></i><span class="hide-menu"> Sub Category
                                         </span></a>
                             </li>

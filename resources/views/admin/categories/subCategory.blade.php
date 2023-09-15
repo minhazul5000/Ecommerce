@@ -1,17 +1,17 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Category
+    Admin || Sub Category
 @endsection
 @section('pageTitle')
-    Category
+    Sub Category
 @endsection
 
 
 @section('content')
     <!-- Button trigger modal -->
-    <a href="{{route('addCategory')}}" class="btn btn-primary mb-3">
-        Add Category
+    <a href="{{route('addSubCategory')}}" class="btn btn-primary mb-3">
+        Add Sub Category
     </a>
 
     <!-- Category List -->
@@ -46,24 +46,26 @@
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
+                    <th>Category</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            @isset($categories)
+            @isset($subcats)
                 @php
                     $serial = 1;
                 @endphp
-                @foreach($categories as $category)
+                @foreach($subcats as $subcat)
                     <tr>
                         <td>{{$serial}}</td>
-                        <td>{{$category->name}}</td>
-                        <td>{{$category->slug}}</td>
-                        <td>{{$category->description}}</td>
-                        <td>@if($category->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>{{$subcat->name}}</td>
+                        <td>{{$subcat->slug}}</td>
+                        <td>{{$subcat->description}}</td>
+                        <td>@if($subcat->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>relation</td>
                         <td>
-                            <a href="{{route('updateCategory',$category->id)}}" class="btn btn-info">Edit</a>
-                            <a href="{{route('deleteCategory',$category->id)}}" class="btn btn-danger text-white">Delete</a>
+                            <a href="{{route('updateSubCategory',$subcat->id)}}" class="btn btn-info">Edit</a>
+                            <a href="{{route('deleteSubCategory',$subcat->id)}}" class="btn btn-danger text-white">Delete</a>
                         </td>
                     </tr>
                     @php

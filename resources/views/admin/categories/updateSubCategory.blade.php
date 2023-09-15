@@ -1,16 +1,16 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Add Category
+    Admin || Update Sub Category
 @endsection
 @section('pageTitle')
-    Add Category
+    Update Sub Category
 @endsection
 
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('addCategory')}}" method="post" class="form-horizontal">
+            <form action="{{route('updateSubCategory',$subcategory->id)}}" method="post" class="form-horizontal">
 
                 <div class="modal-body bg-light">
                     @csrf
@@ -19,7 +19,7 @@
                             <label for="name"
                                    class="col-sm-3 text-end control-label col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name"
+                                <input type="text" name="name" value="{{$subcategory->name}}" class="form-control" id="name"
                                        placeholder="Electronics">
                             </div>
                             @error('name')
@@ -31,7 +31,7 @@
                             <label for="slug" class="col-sm-3 text-end control-label col-form-label">
                                 Slug (Route)</label>
                             <div class="col-sm-9">
-                                <input type="text" name="slug" value="{{old('slug')}}"  class="form-control" id="slug"
+                                <input type="text" name="slug" value="{{$subcategory->slug}}"  class="form-control" id="slug"
                                        placeholder="elctronics">
                             </div>
                             @error('slug')
@@ -40,12 +40,36 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="slug" class="col-sm-3 text-end control-label col-form-label">
+                            <label for="category" class="col-sm-3 text-end control-label col-form-label">
+                                Category</label>
+                            <div class="col-sm-9">
+                                <select name="category_id" class="form-select" id="category">
+
+                                    @isset($categories)
+                                        @foreach($categories as $category)
+                                            <option @if($category->id == $subcategory->category_id){{'selected'}}@endif value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+
+                            @error('category')
+                            <span class="text-center">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="active" class="col-sm-3 text-end control-label col-form-label">
                                 Active</label>
                             <div class="col-sm-9">
                                 <select name="active" class="form-select" id="active">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    @if($subcategory->active == 1)
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    @else
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    @endif
                                 </select>
                             </div>
 
@@ -58,7 +82,7 @@
                             <label for="description"
                                    class="col-sm-3 text-end control-label col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name="description"  placeholder="Electronics product like mobile,desktop etc" class="form-control">{{old('description')}}</textarea>
+                                <textarea id="description" name="description"  placeholder="Electronics product like mobile,desktop etc" class="form-control">{{$subcategory->description}}</textarea>
                             </div>
                             @error('description')
                             <span class="text-center">{{$message}}</span>

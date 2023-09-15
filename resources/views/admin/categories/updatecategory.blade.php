@@ -1,16 +1,23 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Add Category
+    Admin || Update Category
 @endsection
 @section('pageTitle')
-    Add Category
+    Update Category
 @endsection
+
+@php
+    if(isset($category)){
+
+        $cat = $category;
+    }
+@endphp
 
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('addCategory')}}" method="post" class="form-horizontal">
+            <form action="{{route('updateCategory',$cat->id)}}" method="post" class="form-horizontal">
 
                 <div class="modal-body bg-light">
                     @csrf
@@ -19,7 +26,7 @@
                             <label for="name"
                                    class="col-sm-3 text-end control-label col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name"
+                                <input type="text" name="name" value="{{$cat->name}}" class="form-control" id="name"
                                        placeholder="Electronics">
                             </div>
                             @error('name')
@@ -31,7 +38,7 @@
                             <label for="slug" class="col-sm-3 text-end control-label col-form-label">
                                 Slug (Route)</label>
                             <div class="col-sm-9">
-                                <input type="text" name="slug" value="{{old('slug')}}"  class="form-control" id="slug"
+                                <input type="text" name="slug" value="{{$cat->slug}}"  class="form-control" id="slug"
                                        placeholder="elctronics">
                             </div>
                             @error('slug')
@@ -44,8 +51,13 @@
                                 Active</label>
                             <div class="col-sm-9">
                                 <select name="active" class="form-select" id="active">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    @if($cat->active == 1)
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    @else
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    @endif
                                 </select>
                             </div>
 
@@ -58,7 +70,7 @@
                             <label for="description"
                                    class="col-sm-3 text-end control-label col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name="description"  placeholder="Electronics product like mobile,desktop etc" class="form-control">{{old('description')}}</textarea>
+                                <textarea id="description" name="description"  placeholder="Electronics product like mobile,desktop etc" class="form-control">{{$cat->description}}</textarea>
                             </div>
                             @error('description')
                             <span class="text-center">{{$message}}</span>
