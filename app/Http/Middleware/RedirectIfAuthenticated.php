@@ -30,7 +30,7 @@ class RedirectIfAuthenticated
         }
 
         if(Auth::check()){
-            return redirect()->route('userDashboard');
+            return redirect()->route('frontendDashboard');
         }
 
         return $next($request);

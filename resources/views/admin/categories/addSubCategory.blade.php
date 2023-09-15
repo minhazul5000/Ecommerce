@@ -1,16 +1,16 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Add Category
+    Admin || Add Sub Category
 @endsection
 @section('pageTitle')
-    Add Category
+    Add Sub Category
 @endsection
 
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('addCategory')}}" method="post" class="form-horizontal">
+            <form action="{{route('addSubCategory')}}" method="post" class="form-horizontal">
 
                 <div class="modal-body bg-light">
                     @csrf
@@ -40,7 +40,26 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="slug" class="col-sm-3 text-end control-label col-form-label">
+                            <label for="category" class="col-sm-3 text-end control-label col-form-label">
+                                Category</label>
+                            <div class="col-sm-9">
+                                <select name="category_id" class="form-select" id="category">
+
+                                    @isset($categories)
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+
+                            @error('category')
+                            <span class="text-center">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="active" class="col-sm-3 text-end control-label col-form-label">
                                 Active</label>
                             <div class="col-sm-9">
                                 <select name="active" class="form-select" id="active">

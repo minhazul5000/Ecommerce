@@ -21,12 +21,16 @@ class UserAuthControllers extends Controller
         ]);
 
         if(Auth::attempt($credintials)){
-            return redirect()->route('userDashboard');
+            return redirect()->route('frontendDashboard');
         }
 
         return back()->withErrors([
             'email'=>'The provided credentials do not match our records.'
         ])->onlyInput('email');
+    }
+
+    public function showProfile(){
+        return view('user.userDashboard');
     }
 
     public function logout(Request $request)
@@ -35,6 +39,6 @@ class UserAuthControllers extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('userDashboard');
+        return redirect()->route('frontendDashboard');
     }
 }
