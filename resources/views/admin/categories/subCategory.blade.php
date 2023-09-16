@@ -42,27 +42,29 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
-                    <th>Category</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            @isset($subcats)
+
+            @isset($subcatsmodel)
                 @php
                     $serial = 1;
+                    $subcats = $subcatsmodel::All();
                 @endphp
                 @foreach($subcats as $subcat)
                     <tr>
                         <td>{{$serial}}</td>
+                        <td>{{$subcatsmodel::find($subcat->id)->category->name}}</td>
                         <td>{{$subcat->name}}</td>
                         <td>{{$subcat->slug}}</td>
                         <td>{{$subcat->description}}</td>
                         <td>@if($subcat->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
-                        <td>relation</td>
                         <td>
                             <a href="{{route('updateSubCategory',$subcat->id)}}" class="btn btn-info">Edit</a>
                             <a href="{{route('deleteSubCategory',$subcat->id)}}" class="btn btn-danger text-white">Delete</a>

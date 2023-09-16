@@ -14,4 +14,10 @@ class Category extends Model
         'description',
         'active'
     ];
+
+    public function subcategory()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
+
 }

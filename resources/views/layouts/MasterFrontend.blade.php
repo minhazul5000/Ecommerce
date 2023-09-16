@@ -188,9 +188,28 @@
                 @php
                     $categories = App\Models\Category::all();
                 @endphp
+
+
                 @foreach($categories as $category)
-                    <li><a href="{{asset($category->slug)}}">{{$category->name}}</a></li>
+                    @php
+                         $subcats = App\Models\Category::find($category->id)->subcategory;
+                    @endphp
+                    @if(count($subcats) != 0)
+                        <li class="subcategoryDropdown">
+                            <a href="{{asset($category->slug)}}">{{$category->name}}</a>
+                                <ul class="dropdown-menu" id="subcategoryDropdown">
+                                    @foreach($subcats as $sub)
+                                        <li><a href="{{asset($category->slug.'/'.$sub->slug)}}">{{$sub->name}}</a></li>
+                                    @endforeach
+                                </ul>
+                        </li>
+                    @else
+                        <li>
+                            <a href="{{asset($category->slug)}}">{{$category->name}}</a>
+                        </li>
+                    @endif
                 @endforeach
+
 
             </ul>
             <!-- /NAV -->

@@ -13,11 +13,14 @@ class HomeController extends Controller
         return view('frontend.frontendDashboard');
     }
 
-    public function viewCategoryProduct($cat='',$subcat='')
-    {
-        if(!empty($cat)){
-            return view('frontend.categoryView');
-        }
 
+    public function viewCategoryProduct($cat=null,$subcat=null)
+    {
+        if(isset($cat) && isset($subcat)){
+            return view('frontend.categoryView',['breadcrumb'=>['category'=>$cat,'subcategory'=>$subcat]]);
+        }elseif(isset($cat)){
+            return view('frontend.categoryView');
+        }else{
+            abort(404);
     }
 }
