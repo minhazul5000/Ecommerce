@@ -12,10 +12,8 @@ class SubCategoryController extends Controller
 {
     public function showSubCategory()
     {
-        $allsubcategory = Subcategory::all();
-        $allcategory = Category::all();
 
-        return view('admin.categories.subCategory',['subcats'=>$allsubcategory,'category'=>$allcategory]);
+        return view('admin.categories.subCategory',['subcatsmodel'=>Subcategory::class]);
     }
 
     public function addSubCategory(Request $request)
