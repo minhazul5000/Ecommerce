@@ -2302,7 +2302,6 @@ textarea.input {
     color: #15161D !important;
 }
 
-
 @media only screen and (min-width: 768px) {
     .subcategoryDropdown:hover .dropdown-menu {
         display: block;

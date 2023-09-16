@@ -18,8 +18,6 @@
         e.preventDefault();
     });
 
-
-
 	// Mobile Nav toggle
 	$('.menu-toggle > a').on('click', function (e) {
 		e.preventDefault();

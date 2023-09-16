@@ -51,12 +51,11 @@
                 </tr>
             </thead>
             <tbody>
-            @isset($subcatsmodel)
 
+            @isset($subcatsmodel)
                 @php
                     $serial = 1;
                     $subcats = $subcatsmodel::All();
-
                 @endphp
                 @foreach($subcats as $subcat)
                     <tr>

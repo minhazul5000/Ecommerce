@@ -189,6 +189,7 @@
                     $categories = App\Models\Category::all();
                 @endphp
 
+
                 @foreach($categories as $category)
                     @php
                          $subcats = App\Models\Category::find($category->id)->subcategory;

@@ -13,6 +13,7 @@ class HomeController extends Controller
         return view('frontend.frontendDashboard');
     }
 
+
     public function viewCategoryProduct($cat=null,$subcat=null)
     {
         if(isset($cat) && isset($subcat)){
@@ -21,7 +22,5 @@ class HomeController extends Controller
             return view('frontend.categoryView');
         }else{
             abort(404);
-        }
-
     }
 }

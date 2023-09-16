@@ -12,7 +12,6 @@ class SubCategoryController extends Controller
 {
     public function showSubCategory()
     {
-
         return view('admin.categories.subCategory',['subcatsmodel'=>Subcategory::class]);
     }
 
