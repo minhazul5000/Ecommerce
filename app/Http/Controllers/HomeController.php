@@ -10,7 +10,10 @@ class HomeController extends Controller
 {
     public function frontendDashboard()
     {
-        return view('frontend.frontendDashboard');
+        $featureCategory = Category::where('feature',1)->get();
+        $data = ['featureCategory'=>$featureCategory];
+
+        return view('frontend.frontendDashboard',$data);
     }
 
 
