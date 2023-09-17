@@ -20,7 +20,8 @@ class HomeController extends Controller
             return view('frontend.categoryView',['breadcrumb'=>['category'=>$cat,'subcategory'=>$subcat]]);
         }elseif(isset($cat)){
             return view('frontend.categoryView');
-        }else{
+        }else {
             abort(404);
+        }
     }
 }

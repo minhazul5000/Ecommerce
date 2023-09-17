@@ -46,6 +46,8 @@
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
+                    <th>Feature</th>
+                    <th>Thumbnail</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -61,6 +63,10 @@
                         <td>{{$category->slug}}</td>
                         <td>{{$category->description}}</td>
                         <td>@if($category->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>@if($category->feature == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>
+                            <img src="{{asset($category->thumb_img)}}" width="50px" alt="">
+                        </td>
                         <td>
                             <a href="{{route('updateCategory',$category->id)}}" class="btn btn-info">Edit</a>
                             <a href="{{route('deleteCategory',$category->id)}}" class="btn btn-danger text-white">Delete</a>
