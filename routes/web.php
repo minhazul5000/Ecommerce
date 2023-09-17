@@ -104,3 +104,7 @@ Route::middleware('auth')->group(function (){
 Route::get('/', [HomeController::class,'frontendDashboard'])->name('frontendDashboard');
 
 Route::get('/{cat?}/{subcat?}', [HomeController::class,'viewCategoryProduct']);
+
+Route::get('/new',function (){
+    return "hello";
+});
