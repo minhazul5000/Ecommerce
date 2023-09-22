@@ -7,7 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\UserAuthControllers;
 use Illuminate\Support\Facades\Route;
 
-
+Route::fallback(function (){
+   abort(404);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -15,56 +17,27 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 //Guest
-Route::middleware('guest:admin')->group(function (){
-    Route::controller(AdminAuthController::class)->group(function (){
-        Route::get('/admin/login', 'showLoginForm')->name('adminLogin');
-        Route::post('/admin/login', 'loginProcess')->name('adminLogin');
-    });
+
+Route::prefix('admin')->controller(AdminAuthController::class)->middleware('guest:admin')->group(function (){
+    Route::get('/login', 'showLoginForm')->name('adminLogin');
+    Route::post('/login', 'loginProcess')->name('adminLogin');
 });
 
 //Auth
-Route::middleware('auth:admin')->group(function (){
+Route::prefix('admin')->middleware('auth:admin')->group(function (){
     //Dashboard
-    Route::get('/admin/dashboard',function (){
+    Route::get('/dashboard',function (){
         return view('admin.adminDashboard');
     })->name('adminDashboard');
 
     //Logout
-    Route::get('/admin/logout',[AdminAuthController::class,'logout'])->name('adminLogout');
+    Route::get('/logout',[AdminAuthController::class,'logout'])->name('adminLogout');
 
-    //Category
-    Route::controller(CategoryController::class)->group(function (){
-        //Show
-        Route::get('/admin/category','showCategory')->name('showCategory');
+    //Category CRUD
+    Route::resource('categories',CategoryController::class)->except(['show']);
 
-        //Add
-        Route::get('/admin/category/add','addCategory')->name('addCategory');
-        Route::post('/admin/category/add','addCategory')->name('addCategory');
-
-        //Update
-        Route::get('/admin/category/update/{id}','updateCategory')->name('updateCategory');
-        Route::post('/admin/category/update/{id}','updateCategory')->name('updateCategory');
-
-        //Delete
-        Route::get('/admin/category/delete/{id}','deleteCategory')->name('deleteCategory');
-    });
-
-    //Subcategory
-    Route::controller(SubCategoryController::class)->group(function (){
-        //Show
-        Route::get('/admin/sub-category','showSubCategory')->name('showSubCategory');
-
-        //Add
-        Route::get('/admin/sub-category/add','addSubCategory')->name('addSubCategory');
-        Route::post('/admin/sub-category/add','addSubCategory')->name('addSubCategory');
-
-        //Update
-        Route::get('/admin/sub-category/update/{id}','updateSubCategory')->name('updateSubCategory');
-        Route::post('/admin/sub-category/update/{id}','updateSubCategory')->name('updateSubCategory');
-
-        //Delete
-        Route::get('/admin/sub-category/delete/{id}','deleteSubCategory')->name('deleteSubCategory');
-    });
+    //Subcategory CRUD
+    Route::resource('sub-categories',SubCategoryController::class)->except(['show']);
 
 });
 
@@ -75,23 +48,17 @@ Route::middleware('auth:admin')->group(function (){
 |--------------------------------------------------------------------------
 */
 //Guest
-Route::middleware('guest')->group(function (){
-    Route::controller(UserAuthControllers::class)->group(function (){
-        Route::get('/user/login', 'showLoginForm')->name('userLogin');
-        Route::post('/user/login', 'loginProcess')->name('userLogin');
+Route::prefix('user')->controller(UserAuthControllers::class)->middleware('guest')->group(function (){
+    Route::get('/login', 'showLoginForm')->name('userLogin');
+    Route::post('/login', 'loginProcess')->name('userLogin');
 
-        Route::get('/user/register', 'showLoginForm')->name('userRegister');
-    });
-
+    Route::get('/register', 'showLoginForm')->name('userRegister');
 });
 
 //Auth
-Route::middleware('auth')->group(function (){
-    Route::controller(UserAuthControllers::class)->group(function (){
-        Route::get('/user/profile','showProfile')->name('userProfile');
-        Route::get('/user/logout', 'logout')->name('userLogout');
-    });
-
+Route::prefix('user')->controller(UserAuthControllers::class)->middleware('auth')->group(function (){
+    Route::get('/profile','showProfile')->name('userProfile');
+    Route::get('/logout', 'logout')->name('userLogout');
 });
 
 

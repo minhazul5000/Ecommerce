@@ -1,17 +1,17 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Category
+    Admin || Sub Category
 @endsection
 @section('pageTitle')
-    Category
+    Sub Category
 @endsection
 
 
 @section('content')
     <!-- Button trigger modal -->
-    <a href="{{route('addCategory')}}" class="btn btn-primary mb-3">
-        Add Category
+    <a href="{{route('sub-categories.create')}}" class="btn btn-primary mb-3">
+        Add Sub Category
     </a>
 
     <!-- Category List -->
@@ -42,34 +42,35 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
-                    <th>Feature</th>
-                    <th>Thumbnail</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            @isset($categories)
+
+            @isset($subcategories)
                 @php
                     $serial = 1;
                 @endphp
-                @foreach($categories as $category)
+                @foreach($subcategories as $subcategory)
                     <tr>
                         <td>{{$serial}}</td>
-                        <td>{{$category->name}}</td>
-                        <td>{{$category->slug}}</td>
-                        <td>{{$category->description}}</td>
-                        <td>@if($category->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
-                        <td>@if($category->feature == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>{{$subcategory->category->name}}</td>
+                        <td>{{$subcategory->name}}</td>
+                        <td>{{$subcategory->slug}}</td>
+                        <td>{{$subcategory->description}}</td>
+                        <td>@if($subcategory->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
                         <td>
-                            <img src="{{asset($category->thumb_img)}}" width="50px" alt="">
-                        </td>
-                        <td>
-                            <a href="{{route('updateCategory',$category->id)}}" class="btn btn-info">Edit</a>
-                            <a href="{{route('deleteCategory',$category->id)}}" class="btn btn-danger text-white">Delete</a>
+                            <a href="{{route('sub-categories.edit',$subcategory->id)}}" class="btn btn-info">Edit</a>
+                            <form class="d-inline" action="{{route('sub-categories.destroy',$subcategory->id)}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger text-white">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @php

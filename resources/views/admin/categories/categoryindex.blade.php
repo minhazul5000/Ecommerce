@@ -1,17 +1,17 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Sub Category
+    Admin || Category
 @endsection
 @section('pageTitle')
-    Sub Category
+    Category
 @endsection
 
 
 @section('content')
     <!-- Button trigger modal -->
-    <a href="{{route('addSubCategory')}}" class="btn btn-primary mb-3">
-        Add Sub Category
+    <a href="{{route('categories.create')}}" class="btn btn-primary mb-3">
+        Add Category
     </a>
 
     <!-- Category List -->
@@ -42,32 +42,38 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Category</th>
-                    <th>Sub Category</th>
+                    <th>Name</th>
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
+                    <th>Feature</th>
+                    <th>Thumbnail</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-
-            @isset($subcatsmodel)
+            @isset($categories)
                 @php
                     $serial = 1;
-                    $subcats = $subcatsmodel::All();
                 @endphp
-                @foreach($subcats as $subcat)
+                @foreach($categories as $category)
                     <tr>
                         <td>{{$serial}}</td>
-                        <td>{{$subcatsmodel::find($subcat->id)->category->name}}</td>
-                        <td>{{$subcat->name}}</td>
-                        <td>{{$subcat->slug}}</td>
-                        <td>{{$subcat->description}}</td>
-                        <td>@if($subcat->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>{{$category->name}}</td>
+                        <td>{{$category->slug}}</td>
+                        <td>{{$category->description}}</td>
+                        <td>@if($category->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>@if($category->feature == 1){{'Yes'}} @else {{'No'}} @endif</td>
                         <td>
-                            <a href="{{route('updateSubCategory',$subcat->id)}}" class="btn btn-info">Edit</a>
-                            <a href="{{route('deleteSubCategory',$subcat->id)}}" class="btn btn-danger text-white">Delete</a>
+                            <img src="{{asset($category->thumb_img)}}" width="50px" alt="">
+                        </td>
+                        <td>
+                            <a href="{{route('categories.edit',$category->id)}}" class="btn btn-info">Edit</a>
+                            <form class="d-inline" action="{{route('categories.destroy',$category->id)}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger text-white">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @php

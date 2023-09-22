@@ -10,10 +10,9 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('addSubCategory')}}" method="post" class="form-horizontal">
-
+            <form action="{{route('sub-categories.store')}}" method="post" class="form-horizontal">
+                @csrf
                 <div class="modal-body bg-light">
-                    @csrf
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="name"
@@ -44,12 +43,9 @@
                                 Category</label>
                             <div class="col-sm-9">
                                 <select name="category_id" class="form-select" id="category">
-
-                                    @isset($categories)
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
-                                        @endforeach
-                                    @endisset
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

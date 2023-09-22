@@ -10,10 +10,11 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('updateSubCategory',$subcategory->id)}}" method="post" class="form-horizontal">
-
+            <form action="{{route('sub-categories.update',$subcategory->id)}}" method="post" class="form-horizontal">
+                @csrf
+                @method('patch')
                 <div class="modal-body bg-light">
-                    @csrf
+
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="name"
@@ -45,9 +46,10 @@
                             <div class="col-sm-9">
                                 <select name="category_id" class="form-select" id="category">
 
+
                                     @isset($categories)
                                         @foreach($categories as $category)
-                                            <option @if($category->id == $subcategory->category_id){{'selected'}}@endif value="{{$category->id}}">{{$category->name}}</option>
+                                            <option @if($category->id == $subcategory->category->id){{'selected'}}@endif value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     @endisset
                                 </select>

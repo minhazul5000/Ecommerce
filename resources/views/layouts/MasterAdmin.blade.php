@@ -243,6 +243,7 @@
     <!-- ============================================================== -->
     <!-- End Topbar header -->
     <!-- ============================================================== -->
+
     <!-- ============================================================== -->
     <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
@@ -261,11 +262,11 @@
                                                  href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-format-list-bulleted"></i><span
                                 class="hide-menu">Category & Brand </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="{{route('showCategory')}}" class="sidebar-link"><i
+                            <li class="sidebar-item"><a href="{{route('categories.index')}}" class="sidebar-link"><i
                                         class="mdi mdi-playlist-check"></i><span class="hide-menu"> Category
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="{{route('showSubCategory')}}" class="sidebar-link"><i
+                            <li class="sidebar-item"><a href="{{route('sub-categories.index')}}" class="sidebar-link"><i
                                         class="mdi mdi-playlist-plus"></i><span class="hide-menu"> Sub Category
                                         </span></a>
                             </li>

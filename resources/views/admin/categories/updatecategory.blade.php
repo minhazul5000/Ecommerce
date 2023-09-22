@@ -7,18 +7,12 @@
     Update Category
 @endsection
 
-@php
-    if(isset($category)){
-
-        $cat = $category;
-    }
-@endphp
-
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('updateCategory',$cat->id)}}" enctype="multipart/form-data" method="post" class="form-horizontal">
-
+            <form action="{{route('categories.update',$category->id)}}" enctype="multipart/form-data" method="post" class="form-horizontal">
+                @csrf
+                @method('patch')
                 <div class="modal-body bg-light">
                     @csrf
                     <div class="card-body">
@@ -26,7 +20,7 @@
                             <label for="name"
                                    class="col-sm-3 text-end control-label col-form-label">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" name="name" value="{{$cat->name}}" class="form-control" id="name"
+                                <input type="text" name="name" value="{{$category->name}}" class="form-control" id="name"
                                        placeholder="Electronics">
                             </div>
                             @error('name')
@@ -38,7 +32,7 @@
                             <label for="slug" class="col-sm-3 text-end control-label col-form-label">
                                 Slug (Route)</label>
                             <div class="col-sm-9">
-                                <input type="text" name="slug" value="{{$cat->slug}}"  class="form-control" id="slug"
+                                <input type="text" name="slug" value="{{$category->slug}}"  class="form-control" id="slug"
                                        placeholder="elctronics">
                             </div>
                             @error('slug')
@@ -51,7 +45,7 @@
                                 Active</label>
                             <div class="col-sm-9">
                                 <select name="active" class="form-select" id="active">
-                                    @if($cat->active == 1)
+                                    @if($category->active == 1)
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     @else
@@ -71,7 +65,7 @@
                                 Feature</label>
                             <div class="col-sm-9">
                                 <select name="feature" class="form-select" id="feature">
-                                    @if($cat->feature == 1)
+                                    @if($category->feature == 1)
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
                                     @else
@@ -91,7 +85,7 @@
                                 Thumbnail Image</label>
                             <div class="col-sm-9">
                                 <input type="file" id="catThumb" class="form-control" name="catThumb">
-                                <img src="{{asset($cat->thumb_img)}}" width="50px" height="50px" alt="">
+                                <img src="{{asset($category->thumb_img)}}" width="50px" height="50px" alt="">
 
                             </div>
 
@@ -104,7 +98,7 @@
                             <label for="description"
                                    class="col-sm-3 text-end control-label col-form-label">Description</label>
                             <div class="col-sm-9">
-                                <textarea id="description" name="description"  placeholder="Electronics product like mobile,desktop etc" class="form-control">{{$cat->description}}</textarea>
+                                <textarea id="description" name="description"  placeholder="Electronics product like mobile,desktop etc" class="form-control">{{$category->description}}</textarea>
                             </div>
                             @error('description')
                             <span class="text-center">{{$message}}</span>

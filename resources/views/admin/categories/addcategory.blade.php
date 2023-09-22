@@ -10,10 +10,9 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('addCategory')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
-
+            <form action="{{route('categories.store')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-body bg-light">
-                    @csrf
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="name"

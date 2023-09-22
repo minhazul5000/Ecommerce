@@ -4,124 +4,148 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class CategoryController extends Controller
 {
-    public function showCategory()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        $allcategory = Category::all();
-        return view('admin.categories.category',['categories'=>$allcategory]);
+        $categories = Category::all();
+        return view('admin.categories.categoryindex',compact('categories'));
     }
 
-    public function addCategory(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        if($request->method() == 'POST'){
-            try {
+        return view('admin.categories.addcategory');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        try {
+            $categoryData = $request->validate([
+                'name'=>['required'],
+                'slug'=>['required','unique:categories'],
+                'description'=>[],
+                'active'=>['required'],
+                'feature'=>['required'],
+                'catThumb'=>['required','mimes:png,jpeg,gif']
+            ]);
+
+            if($request->file('catThumb')->isValid()){
+                $categoryData['catThumb'] = $this->imageUpload($request);
+            }
+
+            $storeCat = new Category();
+            $storeCat->name = $categoryData['name'];
+            $storeCat->slug = $categoryData['slug'];
+            $storeCat->description = $categoryData['description'];
+            $storeCat->active = $categoryData['active'];
+            $storeCat->thumb_img = $categoryData['catThumb'];
+            $storeCat->feature = $categoryData['feature'];
+
+            $storeCat->save();
+
+        }catch (QueryException $e){
+            dd($e->getMessage());
+        }
+
+        return redirect()->route('categories.index')->with(['msg'=>['alertKey'=>'success','message'=>'Category Added Successfully']]);
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $category = Category::find($id);
+
+        if($category){
+            return view('admin.categories.updatecategory',compact('category'));
+        }else{
+            return redirect()->route('categories.index');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $category = Category::find($id);
+        try {
+            if($request->slug == $category->slug){
+                $categoryData = $request->validate([
+                    'name'=>['required'],
+                    'slug'=>['required'],
+                    'description'=>[],
+                    'active'=>['required'],
+                    'feature'=>['required'],
+                ]);
+            }else{
                 $categoryData = $request->validate([
                     'name'=>['required'],
                     'slug'=>['required','unique:categories'],
                     'description'=>[],
                     'active'=>['required'],
                     'feature'=>['required'],
+                ]);
+            }
+
+            if($request->file('catThumb') == null){
+                $categoryData['catThumb'] = $category->thumb_img;
+            }else{
+                $categoryData['catThumb'] = $request->validate([
                     'catThumb'=>['required','mimes:png,jpeg,gif']
                 ]);
-
-                if($request->file('catThumb')->isValid()){
-                    $categoryData['catThumb'] = $this->imageUpload($request);
-                }
-
-                $storeCat = new Category();
-                $storeCat->name = $categoryData['name'];
-                $storeCat->slug = $categoryData['slug'];
-                $storeCat->description = $categoryData['description'];
-                $storeCat->active = $categoryData['active'];
-                $storeCat->thumb_img = $categoryData['catThumb'];
-                $storeCat->feature = $categoryData['feature'];
-
-                $storeCat->save();
-
-            }catch (QueryException $e){
-                dd($e->getMessage());
             }
 
-            return redirect()->route('showCategory')->with(['msg'=>['alertKey'=>'success','message'=>'Category Added Successfully']]);
-        }
-
-        return view('admin.categories.addCategory');
-    }
-
-    public function updateCategory(Request $request,$id)
-    {
-        $updatedRow = Category::find($id);
-
-
-        if($request->method() == 'POST'){
-            try {
-
-                if($request->slug == $updatedRow->slug){
-                    $categoryData = $request->validate([
-                        'name'=>['required'],
-                        'slug'=>['required'],
-                        'description'=>[],
-                        'active'=>['required'],
-                        'feature'=>['required'],
-                    ]);
-                }else{
-                    $categoryData = $request->validate([
-                        'name'=>['required'],
-                        'slug'=>['required','unique:categories'],
-                        'description'=>[],
-                        'active'=>['required'],
-                        'feature'=>['required'],
-                    ]);
-                }
-
-                if($request->file('catThumb') == null){
-                    $categoryData['catThumb'] = $updatedRow->thumb_img;
-                }else{
-                    $categoryData['catThumb'] = $request->validate([
-                        'catThumb'=>['required','mimes:png,jpeg,gif']
-                    ]);
-                }
-
-                if($request->file('catThumb') !== null){
-                    $categoryData['catThumb'] = $this->imageUpload($request);
-                }
-
-                $updatedRow->name = $categoryData['name'];
-                $updatedRow->slug = $categoryData['slug'];
-                $updatedRow->description = $categoryData['description'];
-                $updatedRow->active = $categoryData['active'];
-                $updatedRow->thumb_img = $categoryData['catThumb'];
-                $updatedRow->feature = $categoryData['feature'];
-
-                $updatedRow->save();
-
-                return redirect()->route('showCategory')->with(['msg'=>['alertKey'=>'info','message'=>'Category Updated Successfully']]);
-
-            }catch (QueryException $e){
-                dd($e->getMessage());
+            if($request->file('catThumb') !== null){
+                $categoryData['catThumb'] = $this->imageUpload($request);
             }
 
+            $category->name = $categoryData['name'];
+            $category->slug = $categoryData['slug'];
+            $category->description = $categoryData['description'];
+            $category->active = $categoryData['active'];
+            $category->thumb_img = $categoryData['catThumb'];
+            $category->feature = $categoryData['feature'];
 
+            $category->save();
+
+            return redirect()->route('categories.index')->with(['msg'=>['alertKey'=>'info','message'=>'Category Updated Successfully']]);
+
+        }catch (QueryException $e){
+            dd($e->getMessage());
         }
-
-        return view('admin.categories.updatecategory',['category' => $updatedRow]);
     }
 
-
-    public function deleteCategory(Request $request,$id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        $deleteCategory = Category::find($id);
+        $category = Category::find($id);
 
-        $deleteCategory->delete();
+        if($category){
+            $category->delete();
 
-        return redirect()->route('showCategory')->with(['msg'=>['alertKey'=>'danger','message'=>'Category Deleted Successfully']]);
+            return redirect()->route('categories.index')->with(['msg'=>['alertKey'=>'danger','message'=>'Category Deleted Successfully']]);
+        }
+        return redirect()->route('categories.index');
     }
 
+
+    //Image Upload
     public function imageUpload(Request $request){
         $filename = substr(md5(time()),0,20).'.'.$request->catThumb->extension();
 
