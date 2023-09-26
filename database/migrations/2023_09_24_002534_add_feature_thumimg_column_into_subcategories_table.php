@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('subcategories', function (Blueprint $table) {
             $table->integer('feature')->after('active');
             $table->string('thumb_img')->after('active');
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('subcategories', function (Blueprint $table) {
             $table->dropColumn('feature');
             $table->dropColumn('thumb_img');
         });

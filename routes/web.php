@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\HomeController;
@@ -39,6 +40,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function (){
     //Subcategory CRUD
     Route::resource('sub-categories',SubCategoryController::class)->except(['show']);
 
+    //Brand CRUD
+    Route::resource('brands',BrandController::class)->except('show');
 });
 
 

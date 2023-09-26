@@ -10,7 +10,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('sub-categories.update',$subcategory->id)}}" method="post" class="form-horizontal">
+            <form action="{{route('sub-categories.update',$subcategory->id)}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
                 @method('patch')
                 <div class="modal-body bg-light">
@@ -76,6 +76,39 @@
                             </div>
 
                             @error('active')
+                            <span class="text-center">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="feature" class="col-sm-3 text-end control-label col-form-label">
+                                Feature</label>
+                            <div class="col-sm-9">
+                                <select name="feature" class="form-select" id="feature">
+                                    @if($subcategory->feature == 1)
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    @else
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    @endif
+                                </select>
+                            </div>
+
+                            @error('feature')
+                            <span class="text-center">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="subCatThumb" class="col-sm-3 text-end control-label col-form-label">
+                                Thumbnail Image</label>
+                            <div class="col-sm-9">
+                                <input type="file" id="subCatThumb" class="form-control" name="subCatThumb">
+                                <img src="{{asset('storage/subcategories/'.$subcategory->thumb_img)}}" width="50px" height="50px" alt="">
+                            </div>
+
+                            @error('subCatThumb')
                             <span class="text-center">{{$message}}</span>
                             @enderror
                         </div>

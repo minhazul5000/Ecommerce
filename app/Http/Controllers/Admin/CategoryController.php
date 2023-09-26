@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
+use Image;
 
 class CategoryController extends Controller
 {
@@ -42,7 +43,7 @@ class CategoryController extends Controller
             ]);
 
             if($request->file('catThumb')->isValid()){
-                $categoryData['catThumb'] = $this->imageUpload($request);
+                $categoryData['catThumb'] = $this->uploadImage($request->name,$request->catThumb);
             }
 
             $storeCat = new Category();
@@ -88,7 +89,6 @@ class CategoryController extends Controller
                 $categoryData = $request->validate([
                     'name'=>['required'],
                     'slug'=>['required'],
-                    'description'=>[],
                     'active'=>['required'],
                     'feature'=>['required'],
                 ]);
@@ -96,7 +96,6 @@ class CategoryController extends Controller
                 $categoryData = $request->validate([
                     'name'=>['required'],
                     'slug'=>['required','unique:categories'],
-                    'description'=>[],
                     'active'=>['required'],
                     'feature'=>['required'],
                 ]);
@@ -111,12 +110,12 @@ class CategoryController extends Controller
             }
 
             if($request->file('catThumb') !== null){
-                $categoryData['catThumb'] = $this->imageUpload($request);
+                $categoryData['catThumb'] = $this->uploadImage($request->name,$request->catThumb);
             }
 
             $category->name = $categoryData['name'];
             $category->slug = $categoryData['slug'];
-            $category->description = $categoryData['description'];
+            $category->description = $request->description;
             $category->active = $categoryData['active'];
             $category->thumb_img = $categoryData['catThumb'];
             $category->feature = $categoryData['feature'];
@@ -147,14 +146,19 @@ class CategoryController extends Controller
 
 
     //Image Upload
-    public function imageUpload(Request $request){
-        $filename = substr(md5(time()),0,20).'.'.$request->catThumb->extension();
+    public function uploadImage($name, $image)
+    {
+        $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+        $file_name = $timestamp .'-'.$name. '.' . $image->getClientOriginalExtension();
+        $pathToUpload = storage_path().'/app/public/categories/';
 
-        $uploadedPath = 'Uploads/Category/'.$filename;
+        if(!is_dir($pathToUpload)) {
+            mkdir($pathToUpload, 0755, true);
+        }
 
-        $request->catThumb->move(public_path('Uploads/Category'),$uploadedPath);
+        Image::make($image)->resize(600,400)->save($pathToUpload.$file_name);
 
-        return $uploadedPath;
+        return $file_name;
     }
 
 }

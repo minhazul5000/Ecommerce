@@ -14,7 +14,6 @@
                 @csrf
                 @method('patch')
                 <div class="modal-body bg-light">
-                    @csrf
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="name"
@@ -85,7 +84,7 @@
                                 Thumbnail Image</label>
                             <div class="col-sm-9">
                                 <input type="file" id="catThumb" class="form-control" name="catThumb">
-                                <img src="{{asset($category->thumb_img)}}" width="50px" height="50px" alt="">
+                                <img src="{{asset('storage/categories/'.$category->thumb_img)}}" width="50px" height="50px" alt="">
                             </div>
 
                             @error('catThumb')
