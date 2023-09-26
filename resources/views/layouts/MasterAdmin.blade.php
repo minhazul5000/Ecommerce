@@ -270,7 +270,7 @@
                                         class="mdi mdi-playlist-plus"></i><span class="hide-menu"> Sub Category
                                         </span></a>
                             </li>
-                            <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i
+                            <li class="sidebar-item"><a href="{{route('brands.index')}}" class="sidebar-link"><i
                                         class="mdi mdi-nature"></i><span class="hide-menu"> Brand
                                         </span></a>
                             </li>

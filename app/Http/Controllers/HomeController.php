@@ -10,10 +10,12 @@ class HomeController extends Controller
 {
     public function frontendDashboard()
     {
-        $featureCategory = Category::where('feature',1)->get();
-        $data = ['featureCategory'=>$featureCategory];
+        $featureCategory = Category::where('active','=',1)->where('feature','=',1)->get();
+        $featureSubCategory = Subcategory::with('category')->where('active','=',1)->where('feature','=',1)->get();
 
-        return view('frontend.frontendDashboard',$data);
+        $featureList = array_merge(compact('featureCategory','featureSubCategory'));
+
+        return view('frontend.frontendDashboard',compact('featureList'));
     }
 
 

@@ -1,16 +1,16 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Add Sub Category
+    Admin || Add Brand
 @endsection
 @section('pageTitle')
-    Add Sub Category
+    Add Brand
 @endsection
 
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-7">
-            <form action="{{route('sub-categories.store')}}" enctype="multipart/form-data" method="post" class="form-horizontal">
+            <form action="{{route('brands.store')}}" enctype="multipart/form-data" method="post" class="form-horizontal">
                 @csrf
                 <div class="modal-body bg-light">
                     <div class="card-body">
@@ -43,13 +43,33 @@
                                 Category</label>
                             <div class="col-sm-9">
                                 <select name="category_id" class="form-select" id="category">
-                                    @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
-                                    @endforeach
+                                    @isset($categories)
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    @endisset
                                 </select>
                             </div>
 
-                            @error('category')
+                            @error('category_id')
+                            <span class="text-center">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="subcategory" class="col-sm-3 text-end control-label col-form-label">
+                                Sub Category</label>
+                            <div class="col-sm-9">
+                                <select name="subcategory_id" class="form-select" id="subcategory">
+                                    @isset($subcategories)
+                                        @foreach($subcategories as $subcategory)
+                                            <option value="{{$subcategory->id}}">{{$subcategory->name}}</option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+
+                            @error('subcategory_id')
                             <span class="text-center">{{$message}}</span>
                             @enderror
                         </div>
@@ -70,28 +90,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="feature" class="col-sm-3 text-end control-label col-form-label">
-                                Feature</label>
-                            <div class="col-sm-9">
-                                <select name="feature" class="form-select" id="feature">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-
-                            @error('feature')
-                            <span class="text-center">{{$message}}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="subCatThumb" class="col-sm-3 text-end control-label col-form-label">
+                            <label for="brandThumb" class="col-sm-3 text-end control-label col-form-label">
                                 Thumbnail Image</label>
                             <div class="col-sm-9">
-                                <input type="file" id="subCatThumb" class="form-control" name="subCatThumb">
+                                <input type="file" id="brandThumb" class="form-control" name="brandThumb">
                             </div>
 
-                            @error('subCatThumb')
+                            @error('brandThumb')
                             <span class="text-center">{{$message}}</span>
                             @enderror
                         </div>

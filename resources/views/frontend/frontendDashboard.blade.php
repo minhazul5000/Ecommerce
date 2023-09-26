@@ -11,19 +11,39 @@
             <!-- row -->
             <div class="row">
                 <!-- shop -->
-                @foreach($featureCategory as $singleFeature)
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="{{asset($singleFeature->thumb_img)}}" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>{{$singleFeature->name}}</h3>
-                                <a href="{{asset($singleFeature->slug)}}" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+
+                @if(count($featureList['featureCategory']))
+                    @foreach($featureList['featureCategory'] as $singleFeature)
+                        <div class="col-md-4 col-xs-6">
+                            <div class="shop">
+                                <div class="shop-img">
+                                    <img src="{{asset('storage/categories/'.$singleFeature->thumb_img)}}" alt="">
+                                </div>
+                                <div class="shop-body">
+                                    <h3>{{$singleFeature->name}}</h3>
+                                    <a href="{{asset($singleFeature->slug)}}" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
+
+                @if(count($featureList['featureSubCategory']))
+                    @foreach($featureList['featureSubCategory'] as $singleSubFeature)
+                        <div class="col-md-4 col-xs-6">
+                            <div class="shop">
+                                <div class="shop-img">
+                                    <img src="{{asset('storage/subcategories/'.$singleSubFeature->thumb_img)}}" alt="">
+                                </div>
+                                <div class="shop-body">
+                                    <h3>{{$singleSubFeature->name}}</h3>
+                                    <a href="{{asset($singleSubFeature->category->slug.'/'.$singleSubFeature->slug)}}" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
                 <!-- /shop -->
             </div>
             <!-- /row -->

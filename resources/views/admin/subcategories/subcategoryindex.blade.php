@@ -47,6 +47,8 @@
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
+                    <th>Feature</th>
+                    <th>Thumbnail</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -64,6 +66,11 @@
                         <td>{{$subcategory->slug}}</td>
                         <td>{{$subcategory->description}}</td>
                         <td>@if($subcategory->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>@if($subcategory->feature == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>
+                            <img src="{{asset('storage/subcategories/'.$subcategory->thumb_img)}}" width="50px" alt="">
+                        </td>
+
                         <td>
                             <a href="{{route('sub-categories.edit',$subcategory->id)}}" class="btn btn-info">Edit</a>
                             <form class="d-inline" action="{{route('sub-categories.destroy',$subcategory->id)}}" method="post">

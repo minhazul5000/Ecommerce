@@ -1,17 +1,17 @@
 @extends('layouts.MasterAdmin')
 
 @section('title')
-    Admin || Category
+    Admin || Brands
 @endsection
 @section('pageTitle')
-    Category
+    Brands
 @endsection
 
 
 @section('content')
     <!-- Button trigger modal -->
-    <a href="{{route('categories.create')}}" class="btn btn-primary mb-3">
-        Add Category
+    <a href="{{route('brands.create')}}" class="btn btn-primary mb-3">
+        Add Brands
     </a>
 
     <!-- Category List -->
@@ -42,34 +42,36 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
+                    <th>Brand Name</th>
                     <th>Slug</th>
                     <th>Description</th>
                     <th>Active</th>
-                    <th>Feature</th>
                     <th>Thumbnail</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            @isset($categories)
+            @isset($brands)
                 @php
                     $serial = 1;
                 @endphp
-                @foreach($categories as $category)
+                @foreach($brands as $brand)
                     <tr>
                         <td>{{$serial}}</td>
-                        <td>{{$category->name}}</td>
-                        <td>{{$category->slug}}</td>
-                        <td>{{$category->description}}</td>
-                        <td>@if($category->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
-                        <td>@if($category->feature == 1){{'Yes'}} @else {{'No'}} @endif</td>
+                        <td>{{$brand->category->name}}</td>
+                        <td>{{$brand->subcategory->name}}</td>
+                        <td>{{$brand->name}}</td>
+                        <td>{{$brand->slug}}</td>
+                        <td>{{$brand->description}}</td>
+                        <td>@if($brand->active == 1){{'Yes'}} @else {{'No'}} @endif</td>
                         <td>
-                            <img src="{{asset('storage/categories/'.$category->thumb_img)}}" width="50px" alt="">
+                            <img src="{{asset('storage/brands/'.$brand->thumb_img)}}" width="50px" alt="">
                         </td>
                         <td>
-                            <a href="{{route('categories.edit',$category->id)}}" class="btn btn-info">Edit</a>
-                            <form class="d-inline" action="{{route('categories.destroy',$category->id)}}" method="post">
+                            <a href="{{route('brands.edit',$brand->id)}}" class="btn btn-info">Edit</a>
+                            <form class="d-inline" action="{{route('brands.destroy',$brand->id)}}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger text-white">Delete</button>
