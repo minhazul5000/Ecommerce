@@ -40,50 +40,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="category" class="col-sm-3 text-end control-label col-form-label">
-                                Category</label>
-                            <div class="col-sm-9">
-                                <select name="category_id" class="form-select" id="category">
-                                    @isset($categories)
-                                        @foreach($categories as $category)
-                                            @if($category->id == $brand->category->id)
-                                                <option selected value="{{$category->id}}">{{$category->name}}</option>
-                                            @else
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                            @endif
-                                        @endforeach
-                                    @endisset
-                                </select>
-                            </div>
-
-                            @error('category_id')
-                            <span class="text-center">{{$message}}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="subcategory" class="col-sm-3 text-end control-label col-form-label">
-                                Sub Category</label>
-                            <div class="col-sm-9">
-                                <select name="subcategory_id" class="form-select" id="subcategory">
-                                    @isset($subcategories)
-                                        @foreach($subcategories as $subcategory)
-                                            @if($subcategory->id == $brand->subcategory->id)
-                                                <option selected value="{{$subcategory->id}}">{{$subcategory->name}}</option>
-                                            @else
-                                                <option value="{{$subcategory->id}}">{{$subcategory->name}}</option>
-                                            @endif
-                                        @endforeach
-                                    @endisset
-                                </select>
-                            </div>
-
-                            @error('subcategory_id')
-                            <span class="text-center">{{$message}}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group row">
                             <label for="active" class="col-sm-3 text-end control-label col-form-label">
                                 Active</label>
                             <div class="col-sm-9">

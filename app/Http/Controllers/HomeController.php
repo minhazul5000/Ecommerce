@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
+use Couchbase\QueryException;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,11 +26,10 @@ class HomeController extends Controller
     public function viewCategoryProduct($catslug=null,$subcatslug=null)
     {
         if(isset($catslug) && isset($subcatslug)){
-            $subcat = Subcategory::with('brand')->where('slug','=',$subcatslug)->get()->first();
+            $subcat = Subcategory::where('slug','=',$subcatslug)->get()->first();
             $products = Product::with(['category','subcategory'])->where('subcategory_id','=',$subcat->id)->get();
 
             $brandfilter = true;
-            $brands = $subcat->brand;
 
             if(count($products)){
                 $breadcrumbs = [
@@ -43,7 +43,7 @@ class HomeController extends Controller
                 ];
             }
 
-            return view('frontend.categoryView',compact('products','brandfilter','brands','breadcrumbs'));
+            return view('frontend.categoryView',compact('products','brandfilter','breadcrumbs'));
 
         }elseif(isset($catslug)){
             $cat = Category::where('slug','=',$catslug)->get('id')->first();
