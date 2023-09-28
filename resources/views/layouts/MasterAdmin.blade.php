@@ -277,9 +277,17 @@
                         </ul>
                     </li>
 
-
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-package-variant-closed"></i><span
+                                class="hide-menu">Products </span></a>
+                        <ul aria-expanded="false" class="collapse  first-level">
+                            <li class="sidebar-item"><a href="{{route('products.index')}}" class="sidebar-link"><i
+                                        class="mdi  mdi-package-variant"></i><span class="hide-menu"> Proudcts
+                                        </span></a></li>
                         </ul>
                     </li>
+
+
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -346,6 +354,7 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
 <script src="{{asset('admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{asset('admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
@@ -368,6 +377,36 @@
 <script src="{{asset('admin/assets/libs/flot/jquery.flot.crosshair.js')}}"></script>
 <script src="{{asset('admin/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script>
 <script src="{{asset('admin/dist/js/pages/chart/chart-page-init.js')}}"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#ckeditor1' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+    ClassicEditor
+        .create( document.querySelector( '#ckeditor2' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+    ClassicEditor
+        .create( document.querySelector( '#ckeditor3' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+</script>
 
 </body>
 

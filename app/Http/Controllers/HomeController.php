@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,11 @@ class HomeController extends Controller
         $featureCategory = Category::where('active','=',1)->where('feature','=',1)->get();
         $featureSubCategory = Subcategory::with('category')->where('active','=',1)->where('feature','=',1)->get();
 
+        $newProducts = Product::with(['category','subcategory','brand'])->orderByDesc('created_at')->offset(0)->limit(10)->get();
+
         $featureList = array_merge(compact('featureCategory','featureSubCategory'));
 
-        return view('frontend.frontendDashboard',compact('featureList'));
+        return view('frontend.frontendDashboard',compact('featureList','newProducts'));
     }
 
 
@@ -28,5 +31,13 @@ class HomeController extends Controller
         }else {
             abort(404);
         }
+    }
+
+    public function productDetails($slug=null)
+    {
+        $product = Product::where('slug','=',$slug)->get()->first();
+
+
+        return view('frontend.productdetails',compact('product'));
     }
 }
