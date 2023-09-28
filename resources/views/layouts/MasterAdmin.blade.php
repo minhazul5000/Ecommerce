@@ -57,14 +57,14 @@
                     <b class="logo-icon ps-2">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
-                        <img src="{{asset('admin/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo" />
+                        <img src="{{asset('admin/assets/images/logo-icon.png')}}" style="max-width: 40px;" alt="homepage" class="light-logo" />
 
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
                     <span class="logo-text">
                             <!-- dark Logo text -->
-                            <!--<img src="{{asset('admin/assets/images/logo-text.png')}}" alt="homepage" class="light-logo" />-->
+                            <!--<img src="{{asset('admin/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo" />-->
                         <p class="light-logo mt-3">Wow Electronics</p>
 
                         </span>
@@ -213,7 +213,7 @@
                     <!-- ============================================================== -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{asset('admin/assets/images/users/1.jpg')}}" alt="user" class="rounded-circle" width="31">
+                            <img src="{{asset('admin/assets/images/user-default.jpg')}}" alt="user" class="rounded-circle" width="31">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user me-1 ms-1"></i>
@@ -279,10 +279,10 @@
 
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                                  href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-package-variant-closed"></i><span
-                                class="hide-menu">Products </span></a>
+                                class="hide-menu">Products Management </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
                             <li class="sidebar-item"><a href="{{route('products.index')}}" class="sidebar-link"><i
-                                        class="mdi  mdi-package-variant"></i><span class="hide-menu"> Proudcts
+                                        class="mdi  mdi-package-variant"></i><span class="hide-menu"> Products
                                         </span></a></li>
                         </ul>
                     </li>

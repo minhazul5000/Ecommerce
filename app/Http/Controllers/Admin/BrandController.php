@@ -17,7 +17,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::with(['category','subcategory'])->get();
+        $brands = Brand::all();
 
         return view('admin.brands.brandindex',compact('brands'));
     }
@@ -27,10 +27,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $subcategories = Subcategory::all();
-
-        return view('admin.brands.addbrand',compact('categories','subcategories'));
+        return view('admin.brands.addbrand');
     }
 
     /**
@@ -42,8 +39,6 @@ class BrandController extends Controller
             $brandData = $request->validate([
                 'name'=>['required'],
                 'slug'=>['required','unique:brands'],
-                'category_id'=>['required'],
-                'subcategory_id'=>['required'],
                 'active'=>['required'],
                 'brandThumb'=>['required','mimes:png,jpg,jpeg,gif']
             ]);
@@ -56,8 +51,6 @@ class BrandController extends Controller
 
             $storeBrand->name = $brandData['name'];
             $storeBrand->slug = $brandData['slug'];
-            $storeBrand->category_id = $brandData['category_id'];
-            $storeBrand->subcategory_id = $brandData['subcategory_id'];
             $storeBrand->active = $brandData['active'];
             $storeBrand->thumb_img = $brandData['brandThumb'];
             $storeBrand->description = $request->description;
@@ -77,12 +70,10 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        $brand = Brand::with(['category','subcategory'])->find($id);
-        $categories = Category::all();
-        $subcategories = Subcategory::all();
+        $brand = Brand::find($id);
 
         if($brand){
-            return view('admin.brands.updatebrand',compact('brand','categories','subcategories'));
+            return view('admin.brands.updatebrand',compact('brand'));
         }else{
             return redirect()->route('brands.index');
         }
@@ -102,16 +93,12 @@ class BrandController extends Controller
                 $brandData = $request->validate([
                     'name'=>['required'],
                     'slug'=>['required'],
-                    'category_id'=>['required'],
-                    'subcategory_id'=>['required'],
                     'active'=>['required'],
                 ]);
             }else{
                 $brandData = $request->validate([
                     'name'=>['required'],
                     'slug'=>['required','unique:brands'],
-                    'category_id'=>['required'],
-                    'subcategory_id'=>['required'],
                     'active'=>['required'],
                 ]);
             }
@@ -130,8 +117,6 @@ class BrandController extends Controller
 
             $brand->name = $brandData['name'];
             $brand->slug = $brandData['slug'];
-            $brand->category_id = $brandData['category_id'];
-            $brand->subcategory_id = $brandData['subcategory_id'];
             $brand->active = $brandData['active'];
             $brand->thumb_img = $brandData['brandThumb'];
             $brand->description = $request->description;

@@ -42,8 +42,6 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Category</th>
-                    <th>Sub Category</th>
                     <th>Brand Name</th>
                     <th>Slug</th>
                     <th>Description</th>
@@ -60,8 +58,6 @@
                 @foreach($brands as $brand)
                     <tr>
                         <td>{{$serial}}</td>
-                        <td>{{$brand->category->name}}</td>
-                        <td>{{$brand->subcategory->name}}</td>
                         <td>{{$brand->name}}</td>
                         <td>{{$brand->slug}}</td>
                         <td>{{$brand->description}}</td>
