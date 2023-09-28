@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\UserAuthControllers;
@@ -42,6 +43,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function (){
 
     //Brand CRUD
     Route::resource('brands',BrandController::class)->except('show');
+
+    //Product CRUD
+    Route::resource('products',ProductController::class)->except('show');
 });
 
 
@@ -70,7 +74,9 @@ Route::prefix('user')->controller(UserAuthControllers::class)->middleware('auth'
 | Public Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('/products/{slug?}',[HomeController::class,'productDetails'])->name('products.details');
 Route::get('/', [HomeController::class,'frontendDashboard'])->name('frontendDashboard');
 
 Route::get('/{cat?}/{subcat?}', [HomeController::class,'viewCategoryProduct']);
+
+
