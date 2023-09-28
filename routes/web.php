@@ -60,6 +60,7 @@ Route::prefix('user')->controller(UserAuthControllers::class)->middleware('guest
     Route::post('/login', 'loginProcess')->name('userLogin');
 
     Route::get('/register', 'showLoginForm')->name('userRegister');
+    Route::post('/register/store','registerProcess')->name('userStore');
 });
 
 //Auth
@@ -74,9 +75,12 @@ Route::prefix('user')->controller(UserAuthControllers::class)->middleware('auth'
 | Public Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/products/{slug?}',[HomeController::class,'productDetails'])->name('products.details');
-Route::get('/', [HomeController::class,'frontendDashboard'])->name('frontendDashboard');
 
-Route::get('/{cat?}/{subcat?}', [HomeController::class,'viewCategoryProduct']);
+Route::controller(HomeController::class)->group(function (){
+    Route::get('/products/{slug?}','productDetails')->name('products.details');
+    Route::get('/', 'frontendDashboard')->name('frontendDashboard');
+    Route::get('/{catslug?}/{subcatslug?}','viewCategoryProduct');
+});
+
 
 
