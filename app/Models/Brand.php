@@ -13,7 +13,7 @@ class Brand extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function subcategory(){
-        return $this->belongsTo(Subcategory::class);
+    public function subcategories(){
+        return $this->belongsToMany(Subcategory::class);
     }
 }

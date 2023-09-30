@@ -27,9 +27,16 @@ class HomeController extends Controller
     {
         if(isset($catslug) && isset($subcatslug)){
             $subcat = Subcategory::where('slug','=',$subcatslug)->get()->first();
+
+            if(!$subcat){
+                abort(404);
+            }
+
             $products = Product::with(['category','subcategory'])->where('subcategory_id','=',$subcat->id)->get();
 
             $brandfilter = true;
+            $brands = $subcat->brands;
+
 
             if(count($products)){
                 $breadcrumbs = [
@@ -43,12 +50,19 @@ class HomeController extends Controller
                 ];
             }
 
-            return view('frontend.categoryView',compact('products','brandfilter','breadcrumbs'));
+            return view('frontend.categoryView',compact('products','brandfilter','brands','breadcrumbs'));
 
         }elseif(isset($catslug)){
             $cat = Category::where('slug','=',$catslug)->get('id')->first();
+
+            if(!$cat){
+                abort(404);
+            }
+
             $products = Product::where('category_id','=',$cat->id)->get();
             $brandfilter = false;
+
+
 
             if(count($products)){
                 $breadcrumbs = [
@@ -81,5 +95,10 @@ class HomeController extends Controller
         ];
 
         return view('frontend.productdetails',compact('product','breadcrumbs'));
+    }
+
+    public function cart()
+    {
+        return view('frontend.cart');
     }
 }

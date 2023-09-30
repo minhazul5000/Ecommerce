@@ -274,6 +274,11 @@
                                         class="mdi mdi-nature"></i><span class="hide-menu"> Brand
                                         </span></a>
                             </li>
+
+                            <li class="sidebar-item"><a href="{{route('brand-subcategories.index')}}" class="sidebar-link"><i
+                                        class="mdi mdi-filter"></i><span class="hide-menu"> BrandCategoryFilter
+                                        </span></a>
+                            </li>
                         </ul>
                     </li>
 
